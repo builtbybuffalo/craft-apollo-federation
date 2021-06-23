@@ -1,8 +1,6 @@
 {
     "name": "builtbybuffalo/craft-apollo-federation",
-    "description": "Provides Apollo Federation support for Craft CMS.
-
-Currently only really a work in progress / proof of concept.",
+    "description": "Provides Apollo Federation support for Craft CMS.",
     "type": "craft-plugin",
     "version": "0.0.1",
     "keywords": [
@@ -28,7 +26,6 @@ Currently only really a work in progress / proof of concept.",
     },
     "require-dev": {
       "craftcms/cms": "^3.2.0",
-      "codeception/codeception": "^3.0",
       "vlucas/phpdotenv": "^3.0"
     },
     "autoload": {

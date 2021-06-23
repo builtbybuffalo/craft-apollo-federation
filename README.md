@@ -4,8 +4,6 @@ Provides Apollo Federation support for Craft CMS.
 
 Currently only really a work in progress / proof of concept.
 
-![Screenshot](resources/img/plugin-logo.png)
-
 ## Requirements
 
 This plugin requires Craft CMS 3.0.0-beta.23 or later.
