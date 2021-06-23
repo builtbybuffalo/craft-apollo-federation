@@ -14,7 +14,9 @@ namespace builtbybuffalo\craftapollofederation;
 use Craft;
 use craft\base\Plugin;
 use craft\services\Plugins;
+use craft\services\Gql;
 use craft\events\PluginEvent;
+use craft\events\RegisterGqlQueriesEvent;
 
 use yii\base\Event;
 
@@ -71,6 +73,14 @@ class CraftApolloFederation extends Plugin
             function (PluginEvent $event) {
                 if ($event->plugin === $this) {
                 }
+            }
+        );
+
+        Event::on(
+            Gql::class,
+            Gql::EVENT_REGISTER_GQL_QUERIES,
+            function(RegisterGqlQueriesEvent $event) {
+                $event->queries = array_merge($event->queries, queries\Federation::getQueries());
             }
         );
 
