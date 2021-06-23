@@ -1,0 +1,48 @@
+{
+    "name": "builtbybuffalo/craft-apollo-federation",
+    "description": "Provides Apollo Federation support for Craft CMS.
+
+Currently only really a work in progress / proof of concept.",
+    "type": "craft-plugin",
+    "version": "0.0.1",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "craft apollo federation"
+    ],
+    "support": {
+        "docs": "https://github.com/builtbybuffalo/craft-apollo-federation/blob/master/README.md",
+        "issues": "https://github.com/builtbybuffalo/craft-apollo-federation/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Built By Buffalo",
+            "homepage": "https://builtbybuffalo.com/"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0"
+    },
+    "require-dev": {
+      "craftcms/cms": "^3.2.0",
+      "codeception/codeception": "^3.0",
+      "vlucas/phpdotenv": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+          "builtbybuffalo\\craftapollofederation\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Craft Apollo Federation",
+        "handle": "craft-apollo-federation",
+        "developer": "Built By Buffalo",
+        "developerUrl": "https://builtbybuffalo.com/",
+        "documentationUrl": "https://github.com/builtbybuffalo/craft-apollo-federation/blob/master/README.md",
+        "changelogUrl": "https://raw.githubusercontent.com/builtbybuffalo/craft-apollo-federation/master/CHANGELOG.md",
+        "class": "builtbybuffalo\\craftapollofederation\\CraftApolloFederation"
+    }
+}
