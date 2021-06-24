@@ -15,20 +15,23 @@ use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\InterfaceType;
 use GraphQL\Type\Definition\ObjectType;
+use GraphQL\Type\Definition\FieldDefinition;
 use GraphQL\Utils\SchemaPrinter;
 
 class FederationSchemaPrinter extends SchemaPrinter
 {
     public static function printFederationSdl(Schema $schema): string
     {
+        $ignoredFederationTypes = ['_Any', '_Service', '_Entity'];
+
         return static::printFilteredSchema(
             $schema,
             function(Directive $directive): bool {
                 // Filter out all directives
                 return false;
             },
-            function(Type $type): bool {
-                return !Type::isBuiltInType($type);
+            function(Type $type) use ($ignoredFederationTypes): bool {
+                return !Type::isBuiltInType($type) && !in_array($type->name, $ignoredFederationTypes);
             },
             []
         );
@@ -69,6 +72,31 @@ class FederationSchemaPrinter extends SchemaPrinter
             $implementedInterfaces,
             $directives,
             static::printFields($options, $type)
+        );
+    }
+
+    protected static function printFields(array $options, $type): string
+    {
+        $fields = array_values($type->getFields());
+        $ignoredFederationFields = ['_entities', '_service'];
+
+        if ($type->name === 'Query') {
+            $fields = array_filter($fields, function(FieldDefinition $f) use ($ignoredFederationFields) {
+                return !in_array($f->name, $ignoredFederationFields);
+            });
+        }
+
+        return implode(
+            "\n",
+            array_map(
+                static function (FieldDefinition $f, int $i) use ($options): string {
+                    return static::printDescription($options, $f, '  ', $i === 0) . '  ' .
+                        $f->name . static::printArgs($options, $f->args, '  ') . ': ' .
+                        (string) $f->getType() . static::printDeprecated($f);
+                },
+                $fields,
+                array_keys($fields)
+            )
         );
     }
 }
