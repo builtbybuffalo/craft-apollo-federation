@@ -17,6 +17,7 @@ use craft\services\Plugins;
 use craft\services\Gql;
 use craft\events\PluginEvent;
 use craft\events\RegisterGqlQueriesEvent;
+use craft\events\RegisterGqlSchemaComponentsEvent;
 
 use yii\base\Event;
 
@@ -81,6 +82,20 @@ class CraftApolloFederation extends Plugin
             Gql::EVENT_REGISTER_GQL_QUERIES,
             function(RegisterGqlQueriesEvent $event) {
                 $event->queries = array_merge($event->queries, queries\Federation::getQueries());
+            }
+        );
+
+        Event::on(
+            Gql::class,
+            Gql::EVENT_REGISTER_GQL_SCHEMA_COMPONENTS,
+            function(RegisterGqlSchemaComponentsEvent $event) {
+                $event->queries = array_merge([
+                    'Apollo Federation' => [
+                        'federation:read' => [
+                            'label' => 'Allow Apollo Federation support',
+                        ],
+                    ],
+                ], $event->queries);
             }
         );
 

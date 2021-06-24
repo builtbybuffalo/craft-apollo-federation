@@ -18,12 +18,15 @@ use builtbybuffalo\craftapollofederation\types\AnyType;
 use builtbybuffalo\craftapollofederation\types\EntityUnion;
 use builtbybuffalo\craftapollofederation\resolvers\ServiceResolver;
 use builtbybuffalo\craftapollofederation\resolvers\EntityResolver;
+use builtbybuffalo\craftapollofederation\helpers\GqlHelper;
 
 class Federation extends Query
 {
     public static function getQueries($checkToken = true): array
     {
-        // TODO: Possibly make use of $checkToken here
+        if ($checkToken && !GqlHelper::canUseFederation()) {
+            return [];
+        }
 
         return [
             '_service' => [
