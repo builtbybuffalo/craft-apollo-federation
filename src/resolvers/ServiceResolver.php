@@ -10,6 +10,7 @@
 
 namespace builtbybuffalo\craftapollofederation\resolvers;
 
+use Craft;
 use GraphQL\Type\Definition\ResolveInfo;
 
 use builtbybuffalo\craftapollofederation\utils\FederationSchemaPrinter;
@@ -18,7 +19,8 @@ class ServiceResolver
 {
     public static function resolve($source, array $arguments, $context, ResolveInfo $resolveInfo)
     {
-        $schemaDef = $resolveInfo->schema;
+        $schema = Craft::$app->gql->getActiveSchema();
+        $schemaDef = Craft::$app->gql->getSchemaDef($schema, true);
 
         $sdl = FederationSchemaPrinter::printFederationSdl($schemaDef);
 
